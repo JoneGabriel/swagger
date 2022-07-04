@@ -1,0 +1,125 @@
+{
+    "openapi":"3.0.0",
+    "info":{
+        "title":"API users",
+        "description":"API aims manipulation of users",
+        "termsOfService":"http://localhost:3000/terms",
+        "contact":{
+            "email":"joaogabriel@gmail.com"
+        },
+        "version":"1.0.0"
+    },
+    "servers":[
+        {
+            "url":"http://localhost:3000/",
+            "description":"API of test"
+        }
+       
+    ],
+    "paths":{
+        "/user":{
+        "post":{
+            "summary":"Cadastro de usuario",
+            "description":"Essa rota sera responsavel por cadastrar um novo usuario",
+            "tags":["Users"],
+            "security":[{"bearerAuth":[]}],
+            "requestBody":{
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "$ref":"#/components/schemas/User"
+                        },
+                        "examples":{
+                            "user":{
+                                "value":{
+                                    "name":"joao marcio",
+                                    "email":"joaomarcio@gmail.com",
+                                    "id":"78947584",
+                                    "adm":false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses":{
+                "401":{
+                    "description":"Unauthorized"
+                },
+                "200":{
+                    "description":"OK",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                
+                                    "$ref":"#/components/schemas/User"
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/user/{id}":{
+        "get":{
+            "description":"Busca de um usuario por id",
+            "summart":"Busca de um usuario por id",
+            "tags":["Users"],
+            "parameters":[{
+                "name":"id",
+                "in":"path",
+                "description":"Id para busca",
+                "required":true
+            }],
+            "responses":{
+                "200":{
+                    "description":"OK",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                
+                                    "$ref":"#/components/schemas/User"
+                                
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+    }
+},
+    "components":{
+        "schemas":{
+            "User":{
+                "type":"object",
+                "properties":{
+                    "name":{
+                        "type":"string"
+                    },
+                    "email":{
+                        "type":"string"
+                    },
+                    "id":{
+                        "type":"string"
+                    },
+                    "adm":{
+                        "type":"boolean"
+                    }
+                }
+            }
+        },
+        "securitySchemes":{
+            "bearerAuth":{
+                "type":"http",
+                "scheme":"bearer",
+                "bearerFormat":"JWT"
+            }
+        }
+    }
+
+}
